@@ -1,0 +1,86 @@
+{
+  "documentSearch": "ค้นหาเอกสาร",
+  "bdDocumentNumber": "เลขที่เอกสาร BD",
+  "branch": "สาขา",
+  "status": "สถานะ",
+  "fromDate": "วันที่ขอส่วนลด ตั้งแต่",
+  "toDate": "ถึง",
+  "selectAll": "เลือกทั้งหมด",
+  "numberOrder": "ลำดับ",
+  "totalAmount": "จำนวน รวมทั้งหมด",
+  "unit": "หน่วย",
+  "sumOfPrice": "ราคาปกติ รวมทั้งหมด",
+  "sumOfCashDiscount": "ส่วนลด รวมทั้งหมด",
+  "sumOfPriceAfterDiscount": "ราคาหลังลด รวมทั้งหมด",
+  "createDate": "วันที่ขอ ส่วนลด",
+  "approvedDate": "วันที่อนุมัติ",
+  "remark": "หมายเหตุ",
+  "all": "ทั้งหมด",
+  "noData": "ไม่มีข้อมูล",
+  "list": "รายการ",
+  "headerName": {
+    "quantity": "จำนวน",
+    "total": "ทั้งหมด",
+    "price": "ราคาปกติ",
+    "discount": "ส่วนลด",
+    "priceAfterDiscount": "ราคาหลังลด",
+    "requestedDate": "วันที่ขอ"
+  },
+  "dbStatus": {
+    "draft": "บันทึก",
+    "pendingApproval": "รออนุมัติ",
+    "approved": "อนุมัติ",
+    "barcodePrinted": "พิมพ์บาร์โค้ดแล้ว",
+    "reject": "ไม่อนุมัติ"
+  },
+  "button": {
+    "createNewDocument": "สร้างเอกสารใหม่",
+    "printBarcode": "พิมพ์บาร์โค้ด"
+  },
+  "msg": {
+    "inputDateSearch": "กรุณาระบุวันที่"
+  },
+  "lstBranch": [
+    {
+      "branchId": "B001",
+      "branchCode": "B001",
+      "branchName": "Branch 001"
+    },
+    {
+      "branchId": "B002",
+      "branchCode": "B002",
+      "branchName": "Branch 002"
+    },
+    {
+      "branchId": "B003",
+      "branchCode": "B003",
+      "branchName": "Branch 003"
+    }
+  ],
+  "lstStatus": [
+    {
+      "value": "1",
+      "label": "บันทึก"
+    },
+    {
+      "value": "2",
+      "label": "รออนุมัติ"
+    },
+    {
+      "value": "3",
+      "label": "อนุมัติ"
+    },
+    {
+      "value": "4",
+      "label": "พิมพ์บาร์โค้ดแล้ว"
+    },
+    {
+      "value": "5",
+      "label": "ไม่อนุมัติ"
+    },
+    {
+      "value": "10",
+      "label": "สินค้าหมดอายุ"
+    }
+  ]
+}

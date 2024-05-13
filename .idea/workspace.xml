@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0f6cffb1-49b5-46aa-94ea-cf964163f8a5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitlab-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jest.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/jest.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sonar-project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sonar-project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adapters/externalApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/adapters/externalApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adapters/keycloak-adapter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/adapters/keycloak-adapter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/accounting/expense/confirm/modal-confirm-accounting.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/accounting/expense/confirm/modal-confirm-accounting.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/accounting/expense/expense-detail-summary.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/accounting/expense/expense-detail-summary.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/accounting/expense/expense-detail-transaction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/accounting/expense/expense-detail-transaction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/accounting/expense/expense-detail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/accounting/expense/expense-detail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/accounting/expense/expense-search-list.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/accounting/expense/expense-search-list.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/barcode-discount/modal-barcode-transfer-item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/barcode-discount/modal-barcode-transfer-item.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/check-orders/check-order-detail-list-tote.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/check-orders/check-order-detail-list-tote.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/check-orders/check-order-detail-list.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/check-orders/check-order-detail-list.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/check-orders/check-order-detail-tote.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/check-orders/check-order-detail-tote.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/check-orders/check-order-detail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/check-orders/check-order-detail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/check-orders/order-receive-detail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/check-orders/order-receive-detail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/check-stock/stock-count/modal-stock-count-item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/check-stock/stock-count/modal-stock-count-item.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/commons/ui/modal-add-items-tote.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/commons/ui/modal-add-items-tote.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/commons/ui/modal-add-items.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/commons/ui/modal-add-items.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/commons/ui/modal-add-type-products.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/commons/ui/modal-add-type-products.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/login/login-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/login-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/supplier-check-order/supplier-order-detail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/supplier-check-order/supplier-order-detail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/transfer-out-destroy/modal-add-product-to-destroy-discount.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transfer-out-destroy/modal-add-product-to-destroy-discount.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/transfer-out-destroy/modal-to-destroy-discount-item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transfer-out-destroy/modal-to-destroy-discount-item.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/transfer-out-destroy/modal-transfer-out-destroy-item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transfer-out-destroy/modal-transfer-out-destroy-item.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/transfer-out/modal-transfer-out-item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/transfer-out/modal-transfer-out-item.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/keycolak-token-info.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/keycolak-token-info.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/transfer-out-destroy/transfer-out-destroy-branch.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/transfer-out-destroy/transfer-out-destroy-branch.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/transfer-out-destroy/transfer-out-destroy-list.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/transfer-out-destroy/transfer-out-destroy-list.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/transfer-out/transfer-out-branch.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/transfer-out/transfer-out-branch.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/saga.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/saga.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/enum/common-enum.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/enum/common-enum.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="features/imp_UAT_update_warning_message_vtanh4" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/styles/theme.ts" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2OiTqZ9vWAlRFofvNb435abbKjz" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;deploy&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Admin/Desktop/cj-pos-back-web&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;C:/Users/Admin/Downloads/cj-pos-back-web/node_modules/react-scripts&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.start.executor&quot;: &quot;Run&quot;,
+    &quot;npm.test.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Admin\\Desktop\\cj-pos-back-web\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Jest.component search branch">
+    <configuration name="component search branch" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/tests/components/common/ui/search-branch.test.tsx" />
+      <test-names>
+        <test-name value="component search branch" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="component search branch.find placeholder combo-box-branch " type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/tests/components/common/ui/search-branch.test.tsx" />
+      <test-names>
+        <test-name value="component search branch" />
+        <test-name value="find placeholder combo-box-branch " />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="component tooltip" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/tests/components/common/ui/accordion-huawei-file.test.tsx" />
+      <test-names>
+        <test-name value="component tooltip" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0f6cffb1-49b5-46aa-94ea-cf964163f8a5" name="Changes" comment="" />
+      <created>1682042593259</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682042593259</updated>
+      <workItem from="1682042595225" duration="48000" />
+      <workItem from="1682042696826" duration="66000" />
+      <workItem from="1682306276308" duration="200000" />
+      <workItem from="1683626985550" duration="905000" />
+      <workItem from="1683684819062" duration="5310000" />
+      <workItem from="1683710911617" duration="26000" />
+      <workItem from="1683773471667" duration="3639000" />
+      <workItem from="1683855518822" duration="2840000" />
+      <workItem from="1683941671536" duration="23000" />
+      <workItem from="1683942225872" duration="2931000" />
+      <workItem from="1683947639764" duration="2693000" />
+      <workItem from="1684116391661" duration="2255000" />
+      <workItem from="1684219194702" duration="4487000" />
+      <workItem from="1684286766243" duration="3259000" />
+      <workItem from="1684305776451" duration="4061000" />
+      <workItem from="1684374432708" duration="2732000" />
+      <workItem from="1684718608593" duration="991000" />
+      <workItem from="1684739507874" duration="4344000" />
+      <workItem from="1684805510732" duration="7268000" />
+      <workItem from="1684825316089" duration="1288000" />
+      <workItem from="1684893104202" duration="416000" />
+      <workItem from="1684989207196" duration="894000" />
+      <workItem from="1685520988762" duration="3155000" />
+      <workItem from="1685584331638" duration="3272000" />
+      <workItem from="1685598701061" duration="3498000" />
+      <workItem from="1685669150715" duration="17231000" />
+      <workItem from="1685757060210" duration="5523000" />
+      <workItem from="1685929247700" duration="2273000" />
+      <workItem from="1686021022593" duration="3971000" />
+      <workItem from="1686286311651" duration="5875000" />
+      <workItem from="1686363377004" duration="2303000" />
+      <workItem from="1686533822160" duration="4732000" />
+      <workItem from="1686551642393" duration="4670000" />
+      <workItem from="1686558146325" duration="1823000" />
+      <workItem from="1688715395734" duration="7000" />
+      <workItem from="1688953480163" duration="5000" />
+      <workItem from="1694752659061" duration="39000" />
+      <workItem from="1694752719274" duration="78000" />
+      <workItem from="1694752815367" duration="15000" />
+      <workItem from="1706836581860" duration="5545000" />
+      <workItem from="1706923939988" duration="1225000" />
+      <workItem from="1707095730371" duration="3575000" />
+      <workItem from="1707182036420" duration="609000" />
+      <workItem from="1707962314883" duration="5393000" />
+      <workItem from="1708046468001" duration="5018000" />
+      <workItem from="1708133893054" duration="1242000" />
+      <workItem from="1708304798495" duration="4419000" />
+      <workItem from="1708313022593" duration="437000" />
+      <workItem from="1708313491994" duration="259000" />
+      <workItem from="1708313764875" duration="2172000" />
+      <workItem from="1708328642741" duration="1925000" />
+      <workItem from="1708391776516" duration="9466000" />
+      <workItem from="1708479038254" duration="4843000" />
+      <workItem from="1708564986692" duration="1609000" />
+      <workItem from="1708567166541" duration="4989000" />
+      <workItem from="1708652010024" duration="9122000" />
+      <workItem from="1708739070186" duration="7838000" />
+      <workItem from="1708910953902" duration="10020000" />
+      <workItem from="1708996765870" duration="6000" />
+      <workItem from="1709514619887" duration="2000" />
+      <workItem from="1712547382517" duration="9000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

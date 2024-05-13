@@ -1,0 +1,17 @@
+{
+  "status": {
+    "CREATED": "Created",
+    "READY_TO_TRANSFER": "Ready to transfer",
+    "WAIT_FOR_PICKUP": "Wait for pickup",
+    "TRANSFERING": "Transfering",
+    "COMPLETED": "Completed",
+    "CANCELED": "Canceled",
+    "DRAFT": "Draft",
+    "WAIT_FOR_APPROVAL_1": "Wait for approve 1",
+    "WAIT_FOR_APPROVAL_2": "Wait for approve 2",
+    "APPROVED": "Approved",
+    "AWAITING_FOR_REQUESTER": "Awaiting requester response",
+    "REJECTED": "Rejected"
+  },
+  "documentSearch": "ค้นหาเอกสาร"
+}

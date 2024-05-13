@@ -1,0 +1,11 @@
+{
+  "status": {
+    "DRAFT": "บันทึก",
+    "WAITING_BRANCH_EXAMINE": "รอสาขาตรวจรับสินค้า",
+    "WAITING_DC_CHECK_DIFF": "รอคลังตรวจสอบผลต่าง",
+    "DC_NO_STOCK": "ไม่มีสต๊อกสินค้าที่คลัง",
+    "RECEIVE_COMPLETE": "รับสินค้าครบตามที่เบิก",
+    "INCOMPLETE_RECEIVED": "รับสินค้าไม่ครบตามที่เบิก"
+  },
+  "documentSearch": "ค้นหาเอกสาร"
+}

@@ -1,0 +1,17 @@
+{
+  "status": {
+    "CREATED": "บันทึก",
+    "READY_TO_TRANSFER": "ส่งงานให้ DC",
+    "WAIT_FOR_PICKUP": "รอขนส่งมารับสินค้า",
+    "TRANSFERING": "อยู่ระหว่างขนส่ง",
+    "COMPLETED": "ปิดงาน",
+    "CANCELED": "ยกเลิก",
+    "DRAFT": "บันทึก",
+    "WAIT_FOR_APPROVAL_1": "รออนุมัติ1",
+    "WAIT_FOR_APPROVAL_2": "รออนุมัติ2",
+    "APPROVED": "อนุมัติ",
+    "AWAITING_FOR_REQUESTER": "ส่งกลับแก้ไข",
+    "REJECTED": "ยกเลิก"
+  },
+  "documentSearch": "ค้นหาเอกสาร"
+}

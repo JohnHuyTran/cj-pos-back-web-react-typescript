@@ -1,0 +1,86 @@
+{
+  "documentSearch": "Document search",
+  "bdDocumentNumber": "BD Document number",
+  "branch": "Branch",
+  "status": "Status",
+  "fromDate": "From",
+  "toDate": "To",
+  "selectAll": "Select all",
+  "numberOrder": "No.",
+  "totalAmount": "Total amount",
+  "unit": "Unit",
+  "sumOfPrice": "Sum of price",
+  "sumOfCashDiscount": "Sum of cash discount",
+  "sumOfPriceAfterDiscount": "Sum of price after discount",
+  "createDate": "Create date",
+  "approvedDate": "Approved date",
+  "remark": "Remark",
+  "all": "ALL",
+  "noData": "No data",
+  "list": "List",
+  "headerName": {
+    "quantity": "Quantity",
+    "total": "Total",
+    "price": "Price",
+    "discount": "Discount",
+    "priceAfterDiscount": "Price after discount",
+    "requestedDate": "Requested date"
+  },
+  "dbStatus": {
+    "draft": "Draft",
+    "pendingApproval": "Pending approval",
+    "approved": "Approved",
+    "barcodePrinted": "Barcode printed",
+    "reject": "Reject"
+  },
+  "button": {
+    "createNewDocument": "Create new document",
+    "printBarcode": "Print barcode"
+  },
+  "msg": {
+    "inputDateSearch": "Please specify date!"
+  },
+  "lstBranch": [
+    {
+      "branchId": "B001",
+      "branchCode": "B001",
+      "branchName": "Branch 001"
+    },
+    {
+      "branchId": "B002",
+      "branchCode": "B002",
+      "branchName": "Branch 002"
+    },
+    {
+      "branchId": "B003",
+      "branchCode": "B003",
+      "branchName": "Branch 003"
+    }
+  ],
+  "lstStatus": [
+    {
+      "value": "1",
+      "label": "Draft"
+    },
+    {
+      "value": "2",
+      "label": "Waiting for approval"
+    },
+    {
+      "value": "3",
+      "label": "Approved"
+    },
+    {
+      "value": "4",
+      "label": "Barcode printed"
+    },
+    {
+      "value": "5",
+      "label": "Reject"
+    },
+    {
+      "value": "10",
+      "label": "Expired product"
+    }
+  ]
+}

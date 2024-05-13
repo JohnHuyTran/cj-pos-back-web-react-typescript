@@ -1,0 +1,1047 @@
+Index: src/tests/components/common/ui/modal-add-type-product.test.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { fireEvent, getByTestId, render, screen, within, prettyDOM, waitFor } from '@testing-library/react';\r\nimport { Provider } from 'react-redux';\r\nimport configureStore from 'redux-mock-store';\r\nimport { Store, AnyAction } from '@reduxjs/toolkit';\r\nimport { initialState } from '../../../mockStore';\r\nimport { ThemeProvider, Typography } from '@mui/material';\r\nimport theme from '../../../../styles/theme';\r\nimport { mockUserInfo } from '../../../mockData';\r\nimport React, { Profiler } from 'react';\r\nimport { addTypeAndProduct } from '../../../../store/slices/add-type-product-slice';\r\nimport userEvent from '@testing-library/user-event';\r\nimport ModalAddTypeProduct from '../../../../components/commons/ui/modal-add-type-products';\r\n\r\nlet wrapper;\r\nconst mockStore = configureStore();\r\nlet store: Store<any, AnyAction>;\r\nsessionStorage.setItem('user_info', mockUserInfo);\r\njest.mock('react-i18next', () => ({\r\n  // this mock makes sure any components using the translate hook can use it without a warning being shown\r\n  useTranslation: () => {\r\n    return {\r\n      t: (str: string) => str,\r\n      i18n: {\r\n        changeLanguage: () => new Promise(() => {}),\r\n      },\r\n    };\r\n  },\r\n  initReactI18next: {\r\n    type: '3rdParty',\r\n    init: jest.fn(),\r\n  },\r\n}));\r\nbeforeEach(() => {\r\n  store = mockStore(initialState);\r\n  const handleOnclick = jest.fn();\r\n  const container = render(\r\n    <Provider store={store}>\r\n      <ThemeProvider theme={theme}>\r\n        <ModalAddTypeProduct\r\n          open={true}\r\n          onClose={handleOnclick}\r\n          requestBody={{\r\n            skuCodes: [],\r\n            skuTypes: undefined,\r\n            isOrderable: undefined,\r\n            isSellable: undefined,\r\n          }}\r\n        />\r\n      </ThemeProvider>\r\n    </Provider>\r\n  );\r\n});\r\n\r\njest.mock('react-i18next', () => ({\r\n  // this mock makes sure any components using the translate hook can use it without a warning being shown\r\n  useTranslation: () => {\r\n    return {\r\n      t: (str: string) => str,\r\n      i18n: {\r\n        changeLanguage: () => new Promise(() => {}),\r\n      },\r\n    };\r\n  },\r\n  initReactI18next: {\r\n    type: '3rdParty',\r\n    init: jest.fn(),\r\n  },\r\n}));\r\n\r\ndescribe('component modal add type product', () => {\r\n  it('should click button add product', async () => {\r\n    const handleOnclick = jest.fn();\r\n    setTimeout(() => {\r\n      fireEvent.click(screen.getByTestId('btn-add-product'));\r\n      setTimeout(() => {\r\n        expect(handleOnclick).toHaveBeenCalledTimes(1);\r\n      }, 5000);\r\n    }, 5000);\r\n  });\r\n\r\n  it('should add product', () => {\r\n    const handleOnclick = jest.fn();\r\n    const handleOnAddProduct = jest.fn();\r\n    expect(screen.getByTestId('btn-add-product')).toBeInTheDocument();\r\n    fireEvent.click(screen.getByTestId('btn-add-product'));\r\n    setTimeout(() => {\r\n      fireEvent.click(screen.getByTestId('btn-add-product'));\r\n      fireEvent.change(screen.getByTestId('btn-add-product'));\r\n      setTimeout(() => {\r\n        expect(handleOnAddProduct).toHaveBeenCalledTimes(1);\r\n      }, 5000);\r\n    }, 5000);\r\n  });\r\n\r\n  it('should click button close', async () => {\r\n    const handleOnclick = jest.fn();\r\n    const container = render(\r\n      <Provider store={store}>\r\n        <ThemeProvider theme={theme}>\r\n          <ModalAddTypeProduct\r\n            open={true}\r\n            onClose={handleOnclick}\r\n            requestBody={{\r\n              skuCodes: [],\r\n              skuTypes: undefined,\r\n              isOrderable: undefined,\r\n              isSellable: undefined,\r\n            }}\r\n          />\r\n        </ThemeProvider>\r\n      </Provider>\r\n    );\r\n    setTimeout(() => {\r\n      fireEvent.click(screen.getByLabelText('close'));\r\n      expect(handleOnclick).toHaveBeenCalledTimes(1);\r\n    }, 5000);\r\n  });\r\n\r\n  it('should change radio allproduct', () => {\r\n    setTimeout(() => {\r\n      expect(screen.getByPlaceholderText(/เลือกสินค้าทั้งหมด/)).toBeInTheDocument();\r\n    }, 1000);\r\n  });\r\n\r\n  it('should click radio allproduct', () => {\r\n    setTimeout(() => {\r\n      fireEvent.click(screen.getByPlaceholderText(/เลือกสินค้าทั้งหมด/));\r\n      expect(screen.getByPlaceholderText(/เลือกสินค้าทั้งหมด/)).toBeInTheDocument();\r\n    }, 1000);\r\n  });\r\n\r\n  it('find text autocomplete productTypeOptions', () => {\r\n    expect(screen.getByTestId(/autocomplete-product-type/)).toBeInTheDocument();\r\n  });\r\n\r\n  it('find placeholder productTypeOptions', () => {\r\n    expect(screen.getByPlaceholderText('รหัสประเภท/ประเภทสินค้า')).toBeInTheDocument();\r\n  });\r\n\r\n  it('onchange value productTypeOptions', () => {\r\n    const autocomplete = screen.getByTestId(/autocomplete-product-type/);\r\n    const input = within(autocomplete).getByRole('textbox') as HTMLInputElement;\r\n    autocomplete.focus();\r\n\r\n    fireEvent.change(input, { target: { value: 'BEER' } });\r\n\r\n    // navigate to the first item in the autocomplete box\r\n    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });\r\n    // fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });\r\n    // select the first item\r\n    fireEvent.keyDown(autocomplete, { key: 'Enter' });\r\n    // check the new value of the input field\r\n    expect(input.value).toBe('BEER');\r\n\r\n    fireEvent.change(input, { target: { value: '0' } });\r\n    // navigate to the first item in the autocomplete box\r\n    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });\r\n    // fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });\r\n    // select the first item\r\n    fireEvent.keyDown(autocomplete, { key: 'Enter' });\r\n  });\r\n\r\n  it('find text autocomplete productOptions', () => {\r\n    expect(screen.queryByTestId(/autocomplete-product-option/)).toBeInTheDocument();\r\n  });\r\n\r\n  it('find placeholder productOptions', () => {\r\n    expect(screen.getByPlaceholderText('ค้นหาบาร์โค๊ด / รายละเอียดสินค้า')).toBeInTheDocument();\r\n  });\r\n\r\n  it('onchange value productOptions', () => {\r\n    const autocomplete = screen.getByTestId(/autocomplete-product-option/);\r\n    const input = within(autocomplete).getByRole('textbox') as HTMLInputElement;\r\n    autocomplete.focus();\r\n\r\n    fireEvent.change(input, { target: { value: 'BEER' } });\r\n    // navigate to the first item in the autocomplete box\r\n    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });\r\n    // select the first item\r\n    fireEvent.keyDown(autocomplete, { key: 'Enter' });\r\n    // check the new value of the input field\r\n    expect(input.value).toBe('');\r\n    fireEvent.change(input, { target: { value: '0' } });\r\n    // navigate to the first item in the autocomplete box\r\n    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });\r\n    // select the first item\r\n    fireEvent.keyDown(autocomplete, { key: 'Enter' });\r\n  });\r\n\r\n  it('check the box ', () => {\r\n    const autocomplete = screen.getByTestId(/autocomplete-product-type/);\r\n    const input = within(autocomplete).getByRole('textbox') as HTMLInputElement;\r\n    autocomplete.focus();\r\n\r\n    fireEvent.change(input, { target: { value: 'BEER' } });\r\n\r\n    // navigate to the first item in the autocomplete box\r\n    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });\r\n    // fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });\r\n    // select the first item\r\n    fireEvent.keyDown(autocomplete, { key: 'Enter' });\r\n    // check the new value of the input field\r\n    expect(input.value).toBe('BEER');\r\n    const checkbox = screen.getByTestId(/checkbox-select-all-product/);\r\n    fireEvent.click(checkbox);\r\n    // expect(checkbox).toHaveProperty('checked');\r\n  });\r\n\r\n  it('should click button delete item', () => {\r\n    const handleDeleteItem = jest.fn();\r\n    setTimeout(() => {\r\n      fireEvent.click(screen.getByTestId(/icon-delete-item/));\r\n    }, 5000);\r\n    expect(handleDeleteItem).toHaveBeenCalledTimes(0);\r\n  });\r\n\r\n  it('should call set selectedItems', () => {\r\n    const handleOnclick = jest.fn();\r\n    const setStateMock = jest.fn();\r\n    const useStateMock: any = (useState: any) => [useState, setStateMock];\r\n    jest.spyOn(React, 'useState').mockImplementation(useStateMock);\r\n\r\n    const { container } = render(\r\n      <Provider store={store}>\r\n        <ThemeProvider theme={theme}>\r\n          <ModalAddTypeProduct\r\n            open={true}\r\n            onClose={handleOnclick}\r\n            requestBody={{\r\n              skuCodes: [],\r\n              skuTypes: [2],\r\n              isSellable: true,\r\n            }}\r\n          />\r\n        </ThemeProvider>\r\n      </Provider>\r\n    );\r\n\r\n    setTimeout(() => {\r\n      fireEvent.click(screen.getByTestId(/btn-add-product/));\r\n      expect(setStateMock).toHaveBeenCalledTimes(1);\r\n    }, 5000);\r\n  });\r\n});\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tests/components/common/ui/modal-add-type-product.test.tsx b/src/tests/components/common/ui/modal-add-type-product.test.tsx
+--- a/src/tests/components/common/ui/modal-add-type-product.test.tsx	
++++ b/src/tests/components/common/ui/modal-add-type-product.test.tsx	
+@@ -1,21 +1,29 @@
+-import { fireEvent, getByTestId, render, screen, within, prettyDOM, waitFor } from '@testing-library/react';
+-import { Provider } from 'react-redux';
+-import configureStore from 'redux-mock-store';
+-import { Store, AnyAction } from '@reduxjs/toolkit';
+-import { initialState } from '../../../mockStore';
+-import { ThemeProvider, Typography } from '@mui/material';
+-import theme from '../../../../styles/theme';
+-import { mockUserInfo } from '../../../mockData';
+-import React, { Profiler } from 'react';
+-import { addTypeAndProduct } from '../../../../store/slices/add-type-product-slice';
+-import userEvent from '@testing-library/user-event';
+-import ModalAddTypeProduct from '../../../../components/commons/ui/modal-add-type-products';
++import {
++  fireEvent,
++  getByTestId,
++  render,
++  screen,
++  within,
++  prettyDOM,
++  waitFor,
++} from "@testing-library/react";
++import { Provider } from "react-redux";
++import configureStore from "redux-mock-store";
++import { Store, AnyAction } from "@reduxjs/toolkit";
++import { initialState } from "../../../mockStore";
++import { ThemeProvider, Typography } from "@mui/material";
++import theme from "../../../../styles/theme";
++import { mockUserInfo } from "../../../mockData";
++import React, { Profiler } from "react";
++import { addTypeAndProduct } from "../../../../store/slices/add-type-product-slice";
++import userEvent from "@testing-library/user-event";
++import ModalAddTypeProduct from "../../../../components/commons/ui/modal-add-type-products";
+ 
+ let wrapper;
+ const mockStore = configureStore();
+ let store: Store<any, AnyAction>;
+-sessionStorage.setItem('user_info', mockUserInfo);
+-jest.mock('react-i18next', () => ({
++sessionStorage.setItem("user_info", mockUserInfo);
++jest.mock("react-i18next", () => ({
+   // this mock makes sure any components using the translate hook can use it without a warning being shown
+   useTranslation: () => {
+     return {
+@@ -26,7 +34,7 @@
+     };
+   },
+   initReactI18next: {
+-    type: '3rdParty',
++    type: "3rdParty",
+     init: jest.fn(),
+   },
+ }));
+@@ -51,7 +59,7 @@
+   );
+ });
+ 
+-jest.mock('react-i18next', () => ({
++jest.mock("react-i18next", () => ({
+   // this mock makes sure any components using the translate hook can use it without a warning being shown
+   useTranslation: () => {
+     return {
+@@ -62,37 +70,37 @@
+     };
+   },
+   initReactI18next: {
+-    type: '3rdParty',
++    type: "3rdParty",
+     init: jest.fn(),
+   },
+ }));
+ 
+-describe('component modal add type product', () => {
+-  it('should click button add product', async () => {
++describe("component modal add type product", () => {
++  it("should click button add product", async () => {
+     const handleOnclick = jest.fn();
+     setTimeout(() => {
+-      fireEvent.click(screen.getByTestId('btn-add-product'));
++      fireEvent.click(screen.getByTestId("btn-add-product"));
+       setTimeout(() => {
+         expect(handleOnclick).toHaveBeenCalledTimes(1);
+       }, 5000);
+     }, 5000);
+   });
+ 
+-  it('should add product', () => {
++  it("should add product", () => {
+     const handleOnclick = jest.fn();
+     const handleOnAddProduct = jest.fn();
+-    expect(screen.getByTestId('btn-add-product')).toBeInTheDocument();
+-    fireEvent.click(screen.getByTestId('btn-add-product'));
++    expect(screen.getByTestId("btn-add-product")).toBeInTheDocument();
++    fireEvent.click(screen.getByTestId("btn-add-product"));
+     setTimeout(() => {
+-      fireEvent.click(screen.getByTestId('btn-add-product'));
+-      fireEvent.change(screen.getByTestId('btn-add-product'));
++      fireEvent.click(screen.getByTestId("btn-add-product"));
++      fireEvent.change(screen.getByTestId("btn-add-product"));
+       setTimeout(() => {
+         expect(handleOnAddProduct).toHaveBeenCalledTimes(1);
+       }, 5000);
+     }, 5000);
+   });
+ 
+-  it('should click button close', async () => {
++  it("should click button close", async () => {
+     const handleOnclick = jest.fn();
+     const container = render(
+       <Provider store={store}>
+@@ -111,102 +119,112 @@
+       </Provider>
+     );
+     setTimeout(() => {
+-      fireEvent.click(screen.getByLabelText('close'));
++      fireEvent.click(screen.getByLabelText("close"));
+       expect(handleOnclick).toHaveBeenCalledTimes(1);
+     }, 5000);
+   });
+ 
+-  it('should change radio allproduct', () => {
++  it("should change radio allproduct", () => {
+     setTimeout(() => {
+-      expect(screen.getByPlaceholderText(/เลือกสินค้าทั้งหมด/)).toBeInTheDocument();
++      expect(
++        screen.getByPlaceholderText(/เลือกสินค้าทั้งหมด/)
++      ).toBeInTheDocument();
+     }, 1000);
+   });
+ 
+-  it('should click radio allproduct', () => {
++  it("should click radio allproduct", () => {
+     setTimeout(() => {
+       fireEvent.click(screen.getByPlaceholderText(/เลือกสินค้าทั้งหมด/));
+-      expect(screen.getByPlaceholderText(/เลือกสินค้าทั้งหมด/)).toBeInTheDocument();
++      expect(
++        screen.getByPlaceholderText(/เลือกสินค้าทั้งหมด/)
++      ).toBeInTheDocument();
+     }, 1000);
+   });
+ 
+-  it('find text autocomplete productTypeOptions', () => {
++  it("find text autocomplete productTypeOptions", () => {
+     expect(screen.getByTestId(/autocomplete-product-type/)).toBeInTheDocument();
+   });
+ 
+-  it('find placeholder productTypeOptions', () => {
+-    expect(screen.getByPlaceholderText('รหัสประเภท/ประเภทสินค้า')).toBeInTheDocument();
++  it("find placeholder productTypeOptions", () => {
++    expect(
++      screen.getByPlaceholderText("รหัสประเภท/ประเภทสินค้า")
++    ).toBeInTheDocument();
+   });
+ 
+-  it('onchange value productTypeOptions', () => {
++  it("onchange value productTypeOptions", () => {
+     const autocomplete = screen.getByTestId(/autocomplete-product-type/);
+-    const input = within(autocomplete).getByRole('textbox') as HTMLInputElement;
++    const input = within(autocomplete).getByRole("textbox") as HTMLInputElement;
+     autocomplete.focus();
+ 
+-    fireEvent.change(input, { target: { value: 'BEER' } });
++    fireEvent.change(input, { target: { value: "BEER" } });
+ 
+     // navigate to the first item in the autocomplete box
+-    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });
++    fireEvent.keyDown(autocomplete, { key: "ArrowDown" });
+     // fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });
+     // select the first item
+-    fireEvent.keyDown(autocomplete, { key: 'Enter' });
++    fireEvent.keyDown(autocomplete, { key: "Enter" });
+     // check the new value of the input field
+-    expect(input.value).toBe('BEER');
++    expect(input.value).toBe("BEER");
+ 
+-    fireEvent.change(input, { target: { value: '0' } });
++    fireEvent.change(input, { target: { value: "0" } });
+     // navigate to the first item in the autocomplete box
+-    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });
++    fireEvent.keyDown(autocomplete, { key: "ArrowDown" });
+     // fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });
+     // select the first item
+-    fireEvent.keyDown(autocomplete, { key: 'Enter' });
++    fireEvent.keyDown(autocomplete, { key: "Enter" });
+   });
+ 
+-  it('find text autocomplete productOptions', () => {
+-    expect(screen.queryByTestId(/autocomplete-product-option/)).toBeInTheDocument();
++  it("find text autocomplete productOptions", () => {
++    expect(
++      screen.queryByTestId(/autocomplete-product-option/)
++    ).toBeInTheDocument();
+   });
+ 
+-  it('find placeholder productOptions', () => {
+-    expect(screen.getByPlaceholderText('ค้นหาบาร์โค๊ด / รายละเอียดสินค้า')).toBeInTheDocument();
++  it("find placeholder productOptions", () => {
++    expect(
++      screen.getByPlaceholderText("ค้นหาบาร์โค๊ด / รายละเอียดสินค้า")
++    ).toBeInTheDocument();
+   });
+ 
+-  it('onchange value productOptions', () => {
++  it("onchange value productOptions", () => {
+     const autocomplete = screen.getByTestId(/autocomplete-product-option/);
+-    const input = within(autocomplete).getByRole('textbox') as HTMLInputElement;
++    const input = within(autocomplete).getByRole("textbox") as HTMLInputElement;
+     autocomplete.focus();
+ 
+-    fireEvent.change(input, { target: { value: 'BEER' } });
++    fireEvent.change(input, { target: { value: "BEER" } });
+     // navigate to the first item in the autocomplete box
+-    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });
++    fireEvent.keyDown(autocomplete, { key: "ArrowDown" });
+     // select the first item
+-    fireEvent.keyDown(autocomplete, { key: 'Enter' });
++    fireEvent.keyDown(autocomplete, { key: "Enter" });
+     // check the new value of the input field
+-    expect(input.value).toBe('');
+-    fireEvent.change(input, { target: { value: '0' } });
++    expect(input.value).toBe("");
++    fireEvent.change(input, { target: { value: "0" } });
+     // navigate to the first item in the autocomplete box
+-    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });
++    fireEvent.keyDown(autocomplete, { key: "ArrowDown" });
+     // select the first item
+-    fireEvent.keyDown(autocomplete, { key: 'Enter' });
++    fireEvent.keyDown(autocomplete, { key: "Enter" });
+   });
+ 
+-  it('check the box ', () => {
++  it("check the box ", () => {
+     const autocomplete = screen.getByTestId(/autocomplete-product-type/);
+-    const input = within(autocomplete).getByRole('textbox') as HTMLInputElement;
++    const input = within(autocomplete).getByRole("textbox") as HTMLInputElement;
+     autocomplete.focus();
+ 
+-    fireEvent.change(input, { target: { value: 'BEER' } });
++    fireEvent.change(input, { target: { value: "BEER" } });
+ 
+     // navigate to the first item in the autocomplete box
+-    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });
++    fireEvent.keyDown(autocomplete, { key: "ArrowDown" });
+     // fireEvent.keyDown(autocomplete, { key: 'ArrowDown' });
+     // select the first item
+-    fireEvent.keyDown(autocomplete, { key: 'Enter' });
++    fireEvent.keyDown(autocomplete, { key: "Enter" });
+     // check the new value of the input field
+-    expect(input.value).toBe('BEER');
++    expect(input.value).toBe("BEER");
+     const checkbox = screen.getByTestId(/checkbox-select-all-product/);
+     fireEvent.click(checkbox);
+     // expect(checkbox).toHaveProperty('checked');
+   });
+ 
+-  it('should click button delete item', () => {
++  it("should click button delete item", () => {
+     const handleDeleteItem = jest.fn();
+     setTimeout(() => {
+       fireEvent.click(screen.getByTestId(/icon-delete-item/));
+@@ -214,11 +232,11 @@
+     expect(handleDeleteItem).toHaveBeenCalledTimes(0);
+   });
+ 
+-  it('should call set selectedItems', () => {
++  it("should call set selectedItems", () => {
+     const handleOnclick = jest.fn();
+     const setStateMock = jest.fn();
+     const useStateMock: any = (useState: any) => [useState, setStateMock];
+-    jest.spyOn(React, 'useState').mockImplementation(useStateMock);
++    jest.spyOn(React, "useState").mockImplementation(useStateMock);
+ 
+     const { container } = render(
+       <Provider store={store}>
+Index: jest.config.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// const esModules = ['@agm', 'ngx-bootstrap'].join('|');// ...module.exports = {//...transformIgnorePatterns: [`/node_modules/(?!${esModules})`],// ...};\r\n\r\nmodule.exports = {\r\n  testEnvironment: 'jsdom',\r\n  // The root of your source code, typically /src\r\n  // `<rootDir>` is a token Jest substitutes\r\n  roots: ['<rootDir>/src', '<rootDir>/src/tests'],\r\n\r\n  // Jest transformations -- this adds support for TypeScript\r\n  // using ts-jest\r\n  transform: {\r\n    // '^.+\\\\.tsx?$': 'ts-jest',\r\n    '^.+\\\\.(t|j)sx?$': 'ts-jest',\r\n    '^.+\\\\.svg$': '<rootDir>/svgTransform.js',\r\n  },\r\n  coveragePathIgnorePatterns: ['/node_modules/'],\r\n  // transformIgnorePatterns: [`node_modules/*`],\r\n  transformIgnorePatterns: ['node_modules/(?!(dateformat)/)'],\r\n  // transformIgnorePatterns: ['node_modules/(?!(react-redux)/)'],\r\n  // transformIgnorePatterns: ['node_modules/(?!(pdfjs-dist)/)'],\r\n\r\n  // Runs special logic, adding special\r\n  // extended assertions to Jest\r\n  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],\r\n\r\n  // Test spec file resolution pattern\r\n  // Matches parent folder `__tests__` and filename\r\n  // should contain `test` or `spec`.\r\n  // testRegex: '(/__tests__/.*|(\\\\.|/)(test|spec))\\\\.tsx?$',\r\n  // testRegex: '.*\\\\.(test|spec)\\\\.tsx?$',\r\n  // testRegex: '(/tests/.*|(\\\\.|/)(test|spec))\\\\.tsx?$',\r\n\r\n  // Module file extensions for importing\r\n  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],\r\n  moduleNameMapper: {\r\n    'react-pdf/dist/esm/entry.webpack': 'react-pdf',\r\n    '\\\\.(jpg|jpeg|png)$': 'identity-obj-proxy',\r\n    'react-i18next': '<rootDir>/reacti18nextMock.js',\r\n  },\r\n  // collectCoverageFrom: ['src/**/*.{spec,test}.{js,jsx,ts,tsx}'],\r\n  collectCoverageFrom: [\r\n    'src/components/commons/ui/*.tsx',\r\n    'src/components/barcode-discount/*.tsx',\r\n    'src/components/dc-check-orders/*.tsx',\r\n    'src/components/stock/stock-movement/*.tsx',\r\n    'src/components/stock-transfer/*.tsx',\r\n  ],\r\n  // coverageDirectory: '<rootDir>/src/tests/coverage/',\r\n  collectCoverage: true,\r\n  testMatch: ['**/*.{spec,test}.{js,jsx,ts,tsx}'],\r\n};\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/jest.config.js b/jest.config.js
+--- a/jest.config.js	
++++ b/jest.config.js	
+@@ -1,27 +1,26 @@
+ // const esModules = ['@agm', 'ngx-bootstrap'].join('|');// ...module.exports = {//...transformIgnorePatterns: [`/node_modules/(?!${esModules})`],// ...};
+ 
+ module.exports = {
+-  testEnvironment: 'jsdom',
++  testEnvironment: "jsdom",
+   // The root of your source code, typically /src
+   // `<rootDir>` is a token Jest substitutes
+-  roots: ['<rootDir>/src', '<rootDir>/src/tests'],
+-
++  roots: ["<rootDir>/src", "<rootDir>/src/tests", "<rootDir>/src/tests/utils"],
+   // Jest transformations -- this adds support for TypeScript
+   // using ts-jest
+   transform: {
+     // '^.+\\.tsx?$': 'ts-jest',
+-    '^.+\\.(t|j)sx?$': 'ts-jest',
+-    '^.+\\.svg$': '<rootDir>/svgTransform.js',
++    "^.+\\.(t|j)sx?$": "ts-jest",
++    "^.+\\.svg$": "<rootDir>/svgTransform.js",
+   },
+-  coveragePathIgnorePatterns: ['/node_modules/'],
++  coveragePathIgnorePatterns: ["/node_modules/"],
+   // transformIgnorePatterns: [`node_modules/*`],
+-  transformIgnorePatterns: ['node_modules/(?!(dateformat)/)'],
++  transformIgnorePatterns: ["node_modules/(?!(dateformat)/)"],
+   // transformIgnorePatterns: ['node_modules/(?!(react-redux)/)'],
+   // transformIgnorePatterns: ['node_modules/(?!(pdfjs-dist)/)'],
+ 
+   // Runs special logic, adding special
+   // extended assertions to Jest
+-  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
++  setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
+ 
+   // Test spec file resolution pattern
+   // Matches parent folder `__tests__` and filename
+@@ -31,21 +30,25 @@
+   // testRegex: '(/tests/.*|(\\.|/)(test|spec))\\.tsx?$',
+ 
+   // Module file extensions for importing
+-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
++  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+   moduleNameMapper: {
+-    'react-pdf/dist/esm/entry.webpack': 'react-pdf',
+-    '\\.(jpg|jpeg|png)$': 'identity-obj-proxy',
+-    'react-i18next': '<rootDir>/reacti18nextMock.js',
++    "react-pdf/dist/esm/entry.webpack": "react-pdf",
++    "\\.(jpg|jpeg|png)$": "identity-obj-proxy",
++    "react-i18next": "<rootDir>/reacti18nextMock.js",
+   },
+   // collectCoverageFrom: ['src/**/*.{spec,test}.{js,jsx,ts,tsx}'],
+   collectCoverageFrom: [
+-    'src/components/commons/ui/*.tsx',
+-    'src/components/barcode-discount/*.tsx',
+-    'src/components/dc-check-orders/*.tsx',
+-    'src/components/stock/stock-movement/*.tsx',
+-    'src/components/stock-transfer/*.tsx',
++    "src/components/commons/ui/*.tsx",
++    "src/components/barcode-discount/*.tsx",
++    "src/components/dc-check-orders/*.tsx",
++    "src/components/stock/stock-movement/*.tsx",
++    "src/components/stock-transfer/*.tsx",
++    "src/components/stock-transfer/branch-transfer/*.tsx",
++    "src/utils/enum/*.tsx",
++    "src/components/accounting/close-saleshift/*.tsx",
+   ],
+   // coverageDirectory: '<rootDir>/src/tests/coverage/',
+   collectCoverage: true,
+-  testMatch: ['**/*.{spec,test}.{js,jsx,ts,tsx}'],
++  testMatch: ["**/*.{spec,test}.{js,jsx,ts,tsx}"],
++  moduleDirectories: ["node_modules", "src"],
+ };
+Index: src/components/commons/ui/modal-add-type-products.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {\r\n  Autocomplete,\r\n  Button,\r\n  Checkbox,\r\n  Dialog,\r\n  DialogContent,\r\n  FormControlLabel,\r\n  FormGroup,\r\n  Grid,\r\n  IconButton,\r\n  TextField,\r\n  Typography,\r\n} from '@mui/material';\r\nimport React, { useEffect, useRef, useState } from 'react';\r\nimport CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';\r\nimport { Box } from '@mui/system';\r\nimport { useStyles } from '../../../styles/makeTheme';\r\nimport SearchIcon from '@mui/icons-material/Search';\r\nimport { createFilterOptions } from '@mui/material/Autocomplete';\r\nimport { useAppDispatch, useAppSelector } from '../../../store/store';\r\nimport CloseIcon from '@mui/icons-material/Close';\r\nimport _ from 'lodash';\r\nimport AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';\r\nimport { objectNullOrEmpty, stringNullOrEmpty } from '../../../utils/utils';\r\nimport {\r\n  clearSearchAllProductAsync,\r\n  newSearchAllProductAsync,\r\n  searchAllProductAsync,\r\n  searchAllProductTypeAsync,\r\n} from '../../../store/slices/search-type-product-slice';\r\nimport { updateAddTypeAndProductState } from '../../../store/slices/add-type-product-slice';\r\nimport LoadingModal from './loading-modal';\r\nimport { getProductByType } from '../../../services/product-master';\r\nimport { setCheckEdit } from '../../../store/slices/sale-limit-time-slice';\r\nimport { FindProductProps, FindProductRequest } from '../../../models/product-model';\r\n\r\ninterface Error {\r\n  productTypeExist: string;\r\n  productExist: string;\r\n}\r\n\r\ninterface State {\r\n  productType: any;\r\n  product: any;\r\n  selectAllProduct: boolean;\r\n  error: Error;\r\n}\r\n\r\ninterface Props {\r\n  open: boolean;\r\n  onClose: () => void;\r\n  title?: string;\r\n  skuType?: any[];\r\n  showSearch?: boolean;\r\n  textBtn?: string;\r\n  requestBody: FindProductRequest;\r\n  isControlStockType?: boolean;\r\n}\r\n\r\ninterface SelectedItemProps {\r\n  label: string;\r\n  onDelete: any;\r\n}\r\n\r\nconst ModalAddTypeProduct: React.FC<Props> = (props) => {\r\n  const dispatch = useAppDispatch();\r\n  const classes = useStyles();\r\n  const [openLoadingModal, setOpenLoadingModal] = React.useState(false);\r\n  const [searchItem, setSearchItem] = React.useState<any | null>(null);\r\n  const [searchProductType, setSearchProductType] = React.useState<any | null>(null);\r\n  const [values, setValues] = useState<State>({\r\n    productType: {},\r\n    product: {},\r\n    selectAllProduct: false,\r\n    error: {\r\n      productTypeExist: '',\r\n      productExist: '',\r\n    },\r\n  });\r\n  const [selectedItems, setSelectedItems] = useState<any[]>([]);\r\n  const productResponse = useAppSelector((state) => state.searchTypeAndProduct.itemList);\r\n  const productTypeResponse = useAppSelector((state) => state.searchTypeAndProduct.productTypeList);\r\n  const payloadAddTypeProduct = useAppSelector((state) => state.addTypeAndProduct.state);\r\n  const searchDebouceRef = useRef<any>();\r\n  const onInputChangeProduct = async (event: any, value: string, reason: string) => {\r\n    searchDebouceRef.current?.cancel();\r\n    searchDebouceRef.current = _.debounce(async () => {\r\n      if (event && event.keyCode && event.keyCode === 13) {\r\n        return false;\r\n      }\r\n\r\n      // console.log('onInputChange', { reason, value });\r\n      // if (reason == 'reset') {\r\n      //   clearInput();\r\n      // }\r\n\r\n      const keyword = value.trim();\r\n      if (keyword.length >= 3 && reason !== 'reset') {\r\n        setSearchItem(keyword);\r\n        let productTypeList = [];\r\n        let payloadBody: any;\r\n        let requestBody = props.requestBody;\r\n        if (!objectNullOrEmpty(values.productType)) {\r\n          productTypeList.push(values.productType.productTypeCode);\r\n          payloadBody = { ...requestBody, productTypeCodes: productTypeList };\r\n        } else {\r\n          payloadBody = requestBody;\r\n        }\r\n\r\n        const payload: FindProductProps = {\r\n          search: keyword,\r\n          payload: payloadBody,\r\n        };\r\n        await dispatch(newSearchAllProductAsync(payload));\r\n      } else {\r\n        clearData();\r\n      }\r\n    }, 200);\r\n    searchDebouceRef.current();\r\n  };\r\n\r\n  const onInputChangeProductType = async (event: any, value: string, reason: string) => {\r\n    if (event && event.keyCode && event.keyCode === 13) {\r\n      return false;\r\n    }\r\n\r\n    // console.log('onInputChange', { reason, value });\r\n    // if (reason == 'reset') {\r\n    //   clearInput();\r\n    // }\r\n\r\n    const keyword = value.trim();\r\n    if (keyword.length >= 3 && reason !== 'reset') {\r\n      setSearchProductType(keyword);\r\n      await dispatch(searchAllProductTypeAsync(keyword));\r\n    }\r\n    // else {\r\n    // dispatch(clearSearchAllProductTypeAsync({}));\r\n    // }\r\n  };\r\n\r\n  const clearData = async () => {\r\n    dispatch(clearSearchAllProductAsync({}));\r\n  };\r\n\r\n  const clearInput = () => {\r\n    setValues({\r\n      productType: {},\r\n      product: {},\r\n      selectAllProduct: false,\r\n      error: {\r\n        productTypeExist: '',\r\n        productExist: '',\r\n      },\r\n    });\r\n  };\r\n\r\n  let productOptions: any = [];\r\n  if (searchItem)\r\n    productOptions =\r\n      !objectNullOrEmpty(productResponse) && productResponse.data && productResponse.data.length > 0\r\n        ? productResponse.data\r\n        : [];\r\n  const filterProductOptions = createFilterOptions({\r\n    stringify: (option: any) => option.barcodeName + option.barcode,\r\n  });\r\n  const renderProductListItem = (props: any, option: any) => {\r\n    return (\r\n      <li {...props} key={option.barcode}>\r\n        <Grid container spacing={2}>\r\n          <Grid item xs={8}>\r\n            <Typography variant='body2'>{option.barcodeName}</Typography>\r\n            <Typography color='textSecondary' variant='caption'>\r\n              {option.unitName}\r\n            </Typography>\r\n          </Grid>\r\n          <Grid item xs={4} justifyContent={'flex-end'}>\r\n            <Typography variant='body2'>{option.barcode}</Typography>\r\n          </Grid>\r\n        </Grid>\r\n      </li>\r\n    );\r\n  };\r\n\r\n  let productTypeOptions: any = [];\r\n  if (searchProductType)\r\n    productTypeOptions =\r\n      !objectNullOrEmpty(productTypeResponse) && productTypeResponse.data && productTypeResponse.data.length > 0\r\n        ? productTypeResponse.data\r\n        : [];\r\n  const filterProductTypeOptions = createFilterOptions({\r\n    stringify: (option: any) => option.productTypeCode + option.productTypeName,\r\n  });\r\n  const renderProductTypeListItem = (props: any, option: any) => {\r\n    return (\r\n      <li {...props} key={option.productTypeCode}>\r\n        <Typography variant='body2'>{option.productTypeName}</Typography>\r\n      </li>\r\n    );\r\n  };\r\n\r\n  const autocompleteProductRenderInput = (params: any) => {\r\n    return (\r\n      <TextField\r\n        {...params}\r\n        error={!stringNullOrEmpty(values.error.productExist)}\r\n        helperText={values.error.productExist}\r\n        FormHelperTextProps={{\r\n          style: {\r\n            textAlign: 'right',\r\n            marginRight: 0,\r\n          },\r\n        }}\r\n        placeholder={'ค้นหาบาร์โค๊ด / รายละเอียดสินค้า'}\r\n        className={classes.MtextField}\r\n        variant='outlined'\r\n        size='small'\r\n        fullWidth\r\n      />\r\n    );\r\n  };\r\n\r\n  const autocompleteProductTypeRenderInput = (params: any) => {\r\n    return (\r\n      <TextField\r\n        {...params}\r\n        error={!stringNullOrEmpty(values.error.productTypeExist)}\r\n        helperText={values.error.productTypeExist}\r\n        FormHelperTextProps={{\r\n          style: {\r\n            textAlign: 'right',\r\n            marginRight: 0,\r\n          },\r\n        }}\r\n        placeholder={'รหัสประเภท/ประเภทสินค้า'}\r\n        className={classes.MtextField}\r\n        variant='outlined'\r\n        size='small'\r\n        fullWidth\r\n      />\r\n    );\r\n  };\r\n\r\n  const handleChangeProduct = async (event: any, option: any) => {\r\n    let selectedAddItems = _.cloneDeep(selectedItems);\r\n    if (option) {\r\n      let productExist =\r\n        selectedItems && selectedItems.length > 0\r\n          ? selectedItems.filter((it: any) => it.selectedType === 2 && it.barcode === option.barcode)\r\n          : [];\r\n      if (productExist != null && productExist.length > 0) {\r\n        let error = { ...values.error };\r\n        error.productExist = 'สินค้านี้ได้ถูกเลือกแล้ว กรุณาลบก่อนทำการเพิ่มใหม่อีกครั้ง';\r\n        setValues({\r\n          ...values,\r\n          error: error,\r\n        });\r\n        return;\r\n      }\r\n      let productItem: any = _.cloneDeep(option);\r\n      productItem.selectedType = 2;\r\n      productItem.productByType = false;\r\n      productItem.showProduct = true;\r\n      selectedAddItems.push(productItem);\r\n    }\r\n    setSelectedItems(selectedAddItems);\r\n    setValues({\r\n      ...values,\r\n      product: {},\r\n      error: {\r\n        productTypeExist: '',\r\n        productExist: '',\r\n      },\r\n    });\r\n    if (!option) {\r\n      clearData();\r\n    }\r\n  };\r\n\r\n  const handleChangeProductType = async (event: any, option: any) => {\r\n    setValues({\r\n      ...values,\r\n      productType: objectNullOrEmpty(option) ? {} : option,\r\n      error: {\r\n        productTypeExist: '',\r\n        productExist: '',\r\n      },\r\n    });\r\n    if (objectNullOrEmpty(option)) {\r\n      setValues({\r\n        ...values,\r\n        productType: objectNullOrEmpty(option) ? {} : option,\r\n        selectAllProduct: false,\r\n        error: {\r\n          productTypeExist: '',\r\n          productExist: '',\r\n        },\r\n      });\r\n      clearData();\r\n    }\r\n\r\n    setFlagErrType(false);\r\n  };\r\n\r\n  const [flagErrType, setFlagErrType] = React.useState(false);\r\n  const onChangeSelectAllProduct = async (event: any) => {\r\n    if (event) {\r\n      let selectedAddItems = _.cloneDeep(selectedItems);\r\n      if (!objectNullOrEmpty(values.productType)) {\r\n        let productTypeExist =\r\n          selectedItems && selectedItems.length > 0\r\n            ? selectedItems.filter(\r\n                (it: any) => it.selectedType === 1 && it.productTypeCode === values.productType.productTypeCode\r\n              )\r\n            : [];\r\n        if (productTypeExist != null && productTypeExist.length > 0) {\r\n          let error = { ...values.error };\r\n          error.productTypeExist = 'ประเภทสินค้านี้ได้ถูกเลือกแล้ว กรุณาลบก่อนทำการเพิ่มใหม่อีกครั้ง';\r\n          setValues({\r\n            ...values,\r\n            error: error,\r\n          });\r\n          return;\r\n        }\r\n        //add type to selectedAddItems\r\n        let productTypeItem: any = _.cloneDeep(values.productType);\r\n        productTypeItem.selectedType = 1;\r\n        // selectedAddItems.push(productTypeItem);\r\n        //add product by type to selectedAddItems\r\n        let productTypeCode = '';\r\n        if (!objectNullOrEmpty(values.productType)) {\r\n          productTypeCode = values.productType.productTypeCode;\r\n        }\r\n\r\n        let payload: any;\r\n        if (props.isControlStockType) {\r\n          payload = {\r\n            productTypeCode: productTypeCode,\r\n            isControlStock: props.isControlStockType,\r\n          };\r\n        } else {\r\n          payload = {\r\n            productTypeCode: productTypeCode,\r\n          };\r\n        }\r\n\r\n        setOpenLoadingModal(true);\r\n        let res = await getProductByType(payload);\r\n        if (res && res.data && res.data.length > 0) {\r\n          selectedAddItems.push(productTypeItem);\r\n          let lstProductByType = res.data;\r\n          for (const item of lstProductByType) {\r\n            let productItem: any = _.cloneDeep(item);\r\n            let productExist = selectedItems.find((it: any) => it.selectedType === 2 && it.barcode === item.barcode);\r\n            if (objectNullOrEmpty(productExist)) {\r\n              productItem.productByType = true;\r\n              productItem.selectedType = 2;\r\n              productItem.showProduct = true;\r\n              selectedAddItems.push(productItem);\r\n            }\r\n          }\r\n\r\n          setFlagErrType(false);\r\n        } else {\r\n          setFlagErrType(true);\r\n        }\r\n        setOpenLoadingModal(false);\r\n      }\r\n      setSelectedItems(selectedAddItems);\r\n      setValues({\r\n        ...values,\r\n        selectAllProduct: false,\r\n        product: {},\r\n        productType: {},\r\n      });\r\n    }\r\n  };\r\n\r\n  const SelectedItem = (props: SelectedItemProps) => {\r\n    const { label, onDelete, ...other } = props;\r\n    return (\r\n      <div className='wrapper-item'>\r\n        <span>{label}</span>\r\n        <CloseIcon onClick={onDelete} />\r\n      </div>\r\n    );\r\n  };\r\n\r\n  const renderSelectedItems = () => {\r\n    if (selectedItems && selectedItems.length > 0) {\r\n      return selectedItems.map((item: any, index: number) => {\r\n        if (item.selectedType === 1) {\r\n          return (\r\n            <SelectedItem label={item.productTypeName} onDelete={() => handleDeleteTypeOrProduct(item)} key={index} />\r\n          );\r\n        } else if (item.selectedType === 2 && !item.productByType) {\r\n          return <SelectedItem label={item.barcodeName} onDelete={() => handleDeleteTypeOrProduct(item)} key={index} />;\r\n        }\r\n      });\r\n    }\r\n  };\r\n\r\n  const handleDeleteTypeOrProduct = (data: any) => {\r\n    if (objectNullOrEmpty(data)) {\r\n      return;\r\n    }\r\n    let selectedItemFilter = _.cloneDeep(selectedItems);\r\n    if (data.selectedType === 1) {\r\n      selectedItemFilter = selectedItems.filter(\r\n        (it: any) =>\r\n          (it.selectedType === data.selectedType && it.productTypeCode !== data.productTypeCode) ||\r\n          (it.selectedType === 2 && data.productTypeCode !== it.productTypeCode)\r\n      );\r\n    } else if (data.selectedType === 2) {\r\n      selectedItemFilter = selectedItems.filter((it: any) => it.selectedType === 1 || it.barcode !== data.barcode);\r\n    }\r\n    setSelectedItems(selectedItemFilter);\r\n  };\r\n\r\n  const handleAddProduct = () => {\r\n    setOpenLoadingModal(true);\r\n    let selectedItemEnds = _.cloneDeep(selectedItems);\r\n    if (selectedItemEnds && selectedItemEnds.length > 0) {\r\n      let listTypeCodeProducts = new Set(\r\n        selectedItemEnds.map((item: any) => item.productTypeCode).filter((el: any) => el != undefined)\r\n      );\r\n      let listCategoryCode = selectedItemEnds\r\n        .filter((el: any) => el.selectedType === 1)\r\n        .map((item: any) => item.productTypeCode);\r\n\r\n      let listTypes = Array.from(listTypeCodeProducts);\r\n      for (let i of listTypes) {\r\n        if (!listCategoryCode.includes(i)) {\r\n          const item = selectedItemEnds.find((el: any) => i === el.productTypeCode);\r\n          selectedItemEnds.push({\r\n            productTypeCode: item.productTypeCode,\r\n            productTypeName: item.productTypeName,\r\n            selectedType: 1,\r\n          });\r\n        }\r\n      }\r\n    }\r\n    if (payloadAddTypeProduct && payloadAddTypeProduct.length > 0 && !props.showSearch) {\r\n      for (const item of payloadAddTypeProduct) {\r\n        if (item.selectedType === 1) {\r\n          let selectedItemFilter = selectedItems.filter(\r\n            (it) => it.selectedType === item.selectedType && it.productTypeCode === item.productTypeCode\r\n          );\r\n          if (selectedItemFilter && selectedItemFilter.length === 0) {\r\n            selectedItemEnds.push(item);\r\n          }\r\n        } else if (item.selectedType === 2) {\r\n          let selectedItemFilter = selectedItems.filter(\r\n            (it) => it.selectedType === item.selectedType && it.barcode === item.barcode\r\n          );\r\n          if (selectedItemFilter && selectedItemFilter.length === 0) {\r\n            selectedItemEnds.push(item);\r\n          }\r\n        }\r\n      }\r\n    }\r\n    dispatch(updateAddTypeAndProductState(selectedItemEnds));\r\n    dispatch(setCheckEdit(true));\r\n    setSelectedItems([]);\r\n    setTimeout(() => {\r\n      setOpenLoadingModal(false);\r\n      props.onClose();\r\n    }, 300);\r\n  };\r\n\r\n  useEffect(() => {\r\n    if (props.open && props.showSearch) {\r\n      renderOpenItems();\r\n    }\r\n    setFlagErrType(false);\r\n  }, [props.open]);\r\n\r\n  const renderOpenItems = () => {\r\n    if (payloadAddTypeProduct.length > 0) {\r\n      const items: any = [];\r\n      let productTypeName: any = [];\r\n      payloadAddTypeProduct.map((item: any, index: number) => {\r\n        let pTypeName = item.productTypeName ? item.productTypeName : item.productTypeName ? item.productTypeName : '';\r\n\r\n        if (item.selectedType === 2 && !item.productByType) {\r\n          productTypeName.push(pTypeName);\r\n          items.push(item);\r\n        } else if (item.selectedType === 2 && item.productByType) {\r\n          items.push(item);\r\n        } else if (item.selectedType === 1) {\r\n          const filterTypeName = productTypeName.filter((r: any) => r === pTypeName);\r\n          if (filterTypeName.length === 0) items.push(item);\r\n        }\r\n      });\r\n\r\n      setSearchProductType(null);\r\n      setSearchItem(null);\r\n      clearInput();\r\n      setSelectedItems(items);\r\n    }\r\n  };\r\n\r\n  const handleOnClose = () => {\r\n    if (props.showSearch) {\r\n      setSearchProductType(null);\r\n      setSearchItem(null);\r\n      clearInput();\r\n\r\n      if (selectedItems.length === 0) dispatch(updateAddTypeAndProductState([]));\r\n      if (payloadAddTypeProduct.length === 0) setSelectedItems([]);\r\n    }\r\n    props.onClose();\r\n  };\r\n\r\n  return (\r\n    <Dialog open={props.open} PaperProps={{ sx: { width: '1132px', maxWidth: '1132px' } }}>\r\n      <Box sx={{ flex: 1, ml: 2 }}>\r\n        {/* {props.onClose ? ( */}\r\n        <IconButton\r\n          aria-label='close'\r\n          // onClick={props.onClose}\r\n          onClick={handleOnClose}\r\n          sx={{\r\n            position: 'absolute',\r\n            right: 8,\r\n            top: 8,\r\n            color: (theme: any) => theme.palette.grey[400],\r\n          }}>\r\n          <CancelOutlinedIcon fontSize='large' stroke={'white'} stroke-width={1} />\r\n        </IconButton>\r\n        {/* ) : null} */}\r\n      </Box>\r\n      <DialogContent sx={{ padding: '52px 28px 42px 100px' }}>\r\n        <Grid container spacing={2}>\r\n          <Grid item xs={5} pr={5.5}>\r\n            <Box>\r\n              <Typography gutterBottom variant='subtitle1' component='div' mb={1} mt={-1.9}>\r\n                {props.title && props.title}\r\n                {!props.title && 'เพิ่มรายการสินค้า (งด) ขาย'}\r\n              </Typography>\r\n            </Box>\r\n            <Box>\r\n              <Typography gutterBottom variant='subtitle1' component='div' mb={1}>\r\n                ประเภทสินค้า\r\n              </Typography>\r\n              <Autocomplete\r\n                data-testid='autocomplete-product-type'\r\n                options={productTypeOptions}\r\n                id='combo-box-type'\r\n                popupIcon={<SearchIcon color='primary' />}\r\n                size='small'\r\n                filterOptions={filterProductTypeOptions}\r\n                renderOption={renderProductTypeListItem}\r\n                renderInput={autocompleteProductTypeRenderInput}\r\n                onInputChange={onInputChangeProductType}\r\n                onChange={handleChangeProductType}\r\n                getOptionLabel={(option) => (option.productTypeName ? option.productTypeName : '')}\r\n                isOptionEqualToValue={(option, value) => option.productTypeName === value.productTypeName}\r\n                noOptionsText={null}\r\n                className={classes.MautocompleteAddProduct}\r\n                value={values.productType}\r\n              />\r\n            </Box>\r\n            <Box>\r\n              <Box sx={{ display: 'flex', alignItems: 'center' }} mt={1}>\r\n                <Typography gutterBottom variant='subtitle1' component='div' mr={3}>\r\n                  ค้นหาสินค้า\r\n                </Typography>\r\n                <FormGroup>\r\n                  <FormControlLabel\r\n                    control={\r\n                      <Checkbox checked={values.selectAllProduct} disabled={objectNullOrEmpty(values.productType)} />\r\n                    }\r\n                    onClick={onChangeSelectAllProduct}\r\n                    label={'เลือกสินค้าทั้งหมด'}\r\n                  />\r\n                </FormGroup>\r\n\r\n                {flagErrType && (\r\n                  <Box\r\n                    sx={{ display: 'flex', alignItems: 'center', color: '#FF0000', fontSize: 14, marginTop: '4px' }}\r\n                    ml={1}>\r\n                    ไม่พบสินค้า\r\n                  </Box>\r\n                )}\r\n              </Box>\r\n\r\n              <Autocomplete\r\n                options={productOptions}\r\n                id='combo-box-product'\r\n                popupIcon={<SearchIcon color='primary' />}\r\n                size='small'\r\n                filterOptions={filterProductOptions}\r\n                renderOption={renderProductListItem}\r\n                renderInput={autocompleteProductRenderInput}\r\n                onInputChange={onInputChangeProduct}\r\n                onChange={handleChangeProduct}\r\n                getOptionLabel={(option) => (option.barcodeName ? option.barcodeName : '')}\r\n                isOptionEqualToValue={(option, value) => option.barcodeName === value.barcodeName}\r\n                noOptionsText={null}\r\n                className={classes.MautocompleteAddProduct}\r\n                value={values.product}\r\n              />\r\n            </Box>\r\n          </Grid>\r\n          <Grid item xs={7}>\r\n            <Box\r\n              className={classes.MWrapperListBranch}\r\n              sx={{ width: '543px', minWidth: '543px', minHeight: '280px', height: '280px' }}>\r\n              <Box sx={{ display: 'flex', flexWrap: 'wrap', maxHeight: '260px', overflow: 'auto' }}>\r\n                {renderSelectedItems()}\r\n              </Box>\r\n            </Box>\r\n          </Grid>\r\n        </Grid>\r\n      </DialogContent>\r\n      <Grid item xs={12} sx={{ textAlign: 'right' }} mr={3} mb={4}>\r\n        <Button\r\n          variant='contained'\r\n          // color='primary'\r\n          // startIcon={<AddCircleOutlineOutlinedIcon />}\r\n          color={`${!props.textBtn ? 'primary' : 'info'}`}\r\n          onClick={handleAddProduct}\r\n          disabled={!(selectedItems && selectedItems.length > 0)}\r\n          className={classes.MbtnSearch}>\r\n          {props.textBtn && props.textBtn}\r\n          {!props.textBtn && 'เพิ่มสินค้า'}\r\n        </Button>\r\n      </Grid>\r\n      <LoadingModal open={openLoadingModal} />\r\n    </Dialog>\r\n  );\r\n};\r\n\r\nexport default ModalAddTypeProduct;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/commons/ui/modal-add-type-products.tsx b/src/components/commons/ui/modal-add-type-products.tsx
+--- a/src/components/commons/ui/modal-add-type-products.tsx	
++++ b/src/components/commons/ui/modal-add-type-products.tsx	
+@@ -10,29 +10,35 @@
+   IconButton,
+   TextField,
+   Typography,
+-} from '@mui/material';
+-import React, { useEffect, useRef, useState } from 'react';
+-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+-import { Box } from '@mui/system';
+-import { useStyles } from '../../../styles/makeTheme';
+-import SearchIcon from '@mui/icons-material/Search';
+-import { createFilterOptions } from '@mui/material/Autocomplete';
+-import { useAppDispatch, useAppSelector } from '../../../store/store';
+-import CloseIcon from '@mui/icons-material/Close';
+-import _ from 'lodash';
+-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+-import { objectNullOrEmpty, stringNullOrEmpty } from '../../../utils/utils';
++} from "@mui/material";
++import React, { useEffect, useRef, useState } from "react";
++import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
++import { Box } from "@mui/system";
++import { useStyles } from "../../../styles/makeTheme";
++import SearchIcon from "@mui/icons-material/Search";
++import { createFilterOptions } from "@mui/material/Autocomplete";
++import { useAppDispatch, useAppSelector } from "../../../store/store";
++import CloseIcon from "@mui/icons-material/Close";
++import _ from "lodash";
++import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
++import { objectNullOrEmpty, stringNullOrEmpty } from "../../../utils/utils";
+ import {
+   clearSearchAllProductAsync,
+   newSearchAllProductAsync,
+   searchAllProductAsync,
+   searchAllProductTypeAsync,
+-} from '../../../store/slices/search-type-product-slice';
+-import { updateAddTypeAndProductState } from '../../../store/slices/add-type-product-slice';
+-import LoadingModal from './loading-modal';
+-import { getProductByType } from '../../../services/product-master';
+-import { setCheckEdit } from '../../../store/slices/sale-limit-time-slice';
+-import { FindProductProps, FindProductRequest } from '../../../models/product-model';
++} from "../../../store/slices/search-type-product-slice";
++import { updateAddTypeAndProductState } from "../../../store/slices/add-type-product-slice";
++import LoadingModal from "./loading-modal";
++import {
++  getAllProductByBarcode,
++  getProductByType,
++} from "../../../services/product-master";
++import { setCheckEdit } from "../../../store/slices/sale-limit-time-slice";
++import {
++  FindProductProps,
++  FindProductRequest,
++} from "../../../models/product-model";
+ 
+ interface Error {
+   productTypeExist: string;
+@@ -67,22 +73,33 @@
+   const classes = useStyles();
+   const [openLoadingModal, setOpenLoadingModal] = React.useState(false);
+   const [searchItem, setSearchItem] = React.useState<any | null>(null);
+-  const [searchProductType, setSearchProductType] = React.useState<any | null>(null);
++  const [searchProductType, setSearchProductType] = React.useState<any | null>(
++    null
++  );
+   const [values, setValues] = useState<State>({
+     productType: {},
+     product: {},
+     selectAllProduct: false,
+     error: {
+-      productTypeExist: '',
+-      productExist: '',
++      productTypeExist: "",
++      productExist: "",
+     },
+   });
+   const [selectedItems, setSelectedItems] = useState<any[]>([]);
+-  const productResponse = useAppSelector((state) => state.searchTypeAndProduct.itemList);
+-  const productTypeResponse = useAppSelector((state) => state.searchTypeAndProduct.productTypeList);
+-  const payloadAddTypeProduct = useAppSelector((state) => state.addTypeAndProduct.state);
++  // const productResponse = useAppSelector((state) => state.searchTypeAndProduct.itemList);
++  const [productItems, setProductItems] = React.useState<any>();
++  const productTypeResponse = useAppSelector(
++    (state) => state.searchTypeAndProduct.productTypeList
++  );
++  const payloadAddTypeProduct = useAppSelector(
++    (state) => state.addTypeAndProduct.state
++  );
+   const searchDebouceRef = useRef<any>();
+-  const onInputChangeProduct = async (event: any, value: string, reason: string) => {
++  const onInputChangeProduct = async (
++    event: any,
++    value: string,
++    reason: string
++  ) => {
+     searchDebouceRef.current?.cancel();
+     searchDebouceRef.current = _.debounce(async () => {
+       if (event && event.keyCode && event.keyCode === 13) {
+@@ -95,7 +112,7 @@
+       // }
+ 
+       const keyword = value.trim();
+-      if (keyword.length >= 3 && reason !== 'reset') {
++      if (keyword.length >= 3 && reason !== "reset") {
+         setSearchItem(keyword);
+         let productTypeList = [];
+         let payloadBody: any;
+@@ -111,7 +128,16 @@
+           search: keyword,
+           payload: payloadBody,
+         };
+-        await dispatch(newSearchAllProductAsync(payload));
++        // await dispatch(newSearchAllProductAsync(payload));
++        const rs = await getAllProductByBarcode(payload);
++        if (rs) {
++          if (rs.data.length === 1) {
++            handleChangeProduct("", rs.data[0]);
++            setProductItems([]);
++          } else {
++            setProductItems(rs.data);
++          }
++        }
+       } else {
+         clearData();
+       }
+@@ -119,7 +145,11 @@
+     searchDebouceRef.current();
+   };
+ 
+-  const onInputChangeProductType = async (event: any, value: string, reason: string) => {
++  const onInputChangeProductType = async (
++    event: any,
++    value: string,
++    reason: string
++  ) => {
+     if (event && event.keyCode && event.keyCode === 13) {
+       return false;
+     }
+@@ -130,7 +160,7 @@
+     // }
+ 
+     const keyword = value.trim();
+-    if (keyword.length >= 3 && reason !== 'reset') {
++    if (keyword.length >= 3 && reason !== "reset") {
+       setSearchProductType(keyword);
+       await dispatch(searchAllProductTypeAsync(keyword));
+     }
+@@ -149,8 +179,8 @@
+       product: {},
+       selectAllProduct: false,
+       error: {
+-        productTypeExist: '',
+-        productExist: '',
++        productTypeExist: "",
++        productExist: "",
+       },
+     });
+   };
+@@ -158,8 +188,8 @@
+   let productOptions: any = [];
+   if (searchItem)
+     productOptions =
+-      !objectNullOrEmpty(productResponse) && productResponse.data && productResponse.data.length > 0
+-        ? productResponse.data
++      !objectNullOrEmpty(productItems) && productItems.length > 0
++        ? productItems
+         : [];
+   const filterProductOptions = createFilterOptions({
+     stringify: (option: any) => option.barcodeName + option.barcode,
+@@ -169,13 +199,13 @@
+       <li {...props} key={option.barcode}>
+         <Grid container spacing={2}>
+           <Grid item xs={8}>
+-            <Typography variant='body2'>{option.barcodeName}</Typography>
+-            <Typography color='textSecondary' variant='caption'>
++            <Typography variant="body2">{option.barcodeName}</Typography>
++            <Typography color="textSecondary" variant="caption">
+               {option.unitName}
+             </Typography>
+           </Grid>
+-          <Grid item xs={4} justifyContent={'flex-end'}>
+-            <Typography variant='body2'>{option.barcode}</Typography>
++          <Grid item xs={4} justifyContent={"flex-end"}>
++            <Typography variant="body2">{option.barcode}</Typography>
+           </Grid>
+         </Grid>
+       </li>
+@@ -185,7 +215,9 @@
+   let productTypeOptions: any = [];
+   if (searchProductType)
+     productTypeOptions =
+-      !objectNullOrEmpty(productTypeResponse) && productTypeResponse.data && productTypeResponse.data.length > 0
++      !objectNullOrEmpty(productTypeResponse) &&
++      productTypeResponse.data &&
++      productTypeResponse.data.length > 0
+         ? productTypeResponse.data
+         : [];
+   const filterProductTypeOptions = createFilterOptions({
+@@ -194,7 +226,7 @@
+   const renderProductTypeListItem = (props: any, option: any) => {
+     return (
+       <li {...props} key={option.productTypeCode}>
+-        <Typography variant='body2'>{option.productTypeName}</Typography>
++        <Typography variant="body2">{option.productTypeName}</Typography>
+       </li>
+     );
+   };
+@@ -207,14 +239,14 @@
+         helperText={values.error.productExist}
+         FormHelperTextProps={{
+           style: {
+-            textAlign: 'right',
++            textAlign: "right",
+             marginRight: 0,
+           },
+         }}
+-        placeholder={'ค้นหาบาร์โค๊ด / รายละเอียดสินค้า'}
++        placeholder={"ค้นหาบาร์โค๊ด / รายละเอียดสินค้า"}
+         className={classes.MtextField}
+-        variant='outlined'
+-        size='small'
++        variant="outlined"
++        size="small"
+         fullWidth
+       />
+     );
+@@ -228,14 +260,14 @@
+         helperText={values.error.productTypeExist}
+         FormHelperTextProps={{
+           style: {
+-            textAlign: 'right',
++            textAlign: "right",
+             marginRight: 0,
+           },
+         }}
+-        placeholder={'รหัสประเภท/ประเภทสินค้า'}
++        placeholder={"รหัสประเภท/ประเภทสินค้า"}
+         className={classes.MtextField}
+-        variant='outlined'
+-        size='small'
++        variant="outlined"
++        size="small"
+         fullWidth
+       />
+     );
+@@ -246,11 +278,15 @@
+     if (option) {
+       let productExist =
+         selectedItems && selectedItems.length > 0
+-          ? selectedItems.filter((it: any) => it.selectedType === 2 && it.barcode === option.barcode)
++          ? selectedItems.filter(
++              (it: any) =>
++                it.selectedType === 2 && it.barcode === option.barcode
++            )
+           : [];
+       if (productExist != null && productExist.length > 0) {
+         let error = { ...values.error };
+-        error.productExist = 'สินค้านี้ได้ถูกเลือกแล้ว กรุณาลบก่อนทำการเพิ่มใหม่อีกครั้ง';
++        error.productExist =
++          "สินค้านี้ได้ถูกเลือกแล้ว กรุณาลบก่อนทำการเพิ่มใหม่อีกครั้ง";
+         setValues({
+           ...values,
+           error: error,
+@@ -268,8 +304,8 @@
+       ...values,
+       product: {},
+       error: {
+-        productTypeExist: '',
+-        productExist: '',
++        productTypeExist: "",
++        productExist: "",
+       },
+     });
+     if (!option) {
+@@ -282,8 +318,8 @@
+       ...values,
+       productType: objectNullOrEmpty(option) ? {} : option,
+       error: {
+-        productTypeExist: '',
+-        productExist: '',
++        productTypeExist: "",
++        productExist: "",
+       },
+     });
+     if (objectNullOrEmpty(option)) {
+@@ -292,8 +328,8 @@
+         productType: objectNullOrEmpty(option) ? {} : option,
+         selectAllProduct: false,
+         error: {
+-          productTypeExist: '',
+-          productExist: '',
++          productTypeExist: "",
++          productExist: "",
+         },
+       });
+       clearData();
+@@ -310,12 +346,15 @@
+         let productTypeExist =
+           selectedItems && selectedItems.length > 0
+             ? selectedItems.filter(
+-                (it: any) => it.selectedType === 1 && it.productTypeCode === values.productType.productTypeCode
++                (it: any) =>
++                  it.selectedType === 1 &&
++                  it.productTypeCode === values.productType.productTypeCode
+               )
+             : [];
+         if (productTypeExist != null && productTypeExist.length > 0) {
+           let error = { ...values.error };
+-          error.productTypeExist = 'ประเภทสินค้านี้ได้ถูกเลือกแล้ว กรุณาลบก่อนทำการเพิ่มใหม่อีกครั้ง';
++          error.productTypeExist =
++            "ประเภทสินค้านี้ได้ถูกเลือกแล้ว กรุณาลบก่อนทำการเพิ่มใหม่อีกครั้ง";
+           setValues({
+             ...values,
+             error: error,
+@@ -327,7 +366,7 @@
+         productTypeItem.selectedType = 1;
+         // selectedAddItems.push(productTypeItem);
+         //add product by type to selectedAddItems
+-        let productTypeCode = '';
++        let productTypeCode = "";
+         if (!objectNullOrEmpty(values.productType)) {
+           productTypeCode = values.productType.productTypeCode;
+         }
+@@ -351,7 +390,9 @@
+           let lstProductByType = res.data;
+           for (const item of lstProductByType) {
+             let productItem: any = _.cloneDeep(item);
+-            let productExist = selectedItems.find((it: any) => it.selectedType === 2 && it.barcode === item.barcode);
++            let productExist = selectedItems.find(
++              (it: any) => it.selectedType === 2 && it.barcode === item.barcode
++            );
+             if (objectNullOrEmpty(productExist)) {
+               productItem.productByType = true;
+               productItem.selectedType = 2;
+@@ -379,7 +420,7 @@
+   const SelectedItem = (props: SelectedItemProps) => {
+     const { label, onDelete, ...other } = props;
+     return (
+-      <div className='wrapper-item'>
++      <div className="wrapper-item">
+         <span>{label}</span>
+         <CloseIcon onClick={onDelete} />
+       </div>
+@@ -391,10 +432,20 @@
+       return selectedItems.map((item: any, index: number) => {
+         if (item.selectedType === 1) {
+           return (
+-            <SelectedItem label={item.productTypeName} onDelete={() => handleDeleteTypeOrProduct(item)} key={index} />
++            <SelectedItem
++              label={item.productTypeName}
++              onDelete={() => handleDeleteTypeOrProduct(item)}
++              key={index}
++            />
+           );
+         } else if (item.selectedType === 2 && !item.productByType) {
+-          return <SelectedItem label={item.barcodeName} onDelete={() => handleDeleteTypeOrProduct(item)} key={index} />;
++          return (
++            <SelectedItem
++              label={item.barcodeName}
++              onDelete={() => handleDeleteTypeOrProduct(item)}
++              key={index}
++            />
++          );
+         }
+       });
+     }
+@@ -408,11 +459,14 @@
+     if (data.selectedType === 1) {
+       selectedItemFilter = selectedItems.filter(
+         (it: any) =>
+-          (it.selectedType === data.selectedType && it.productTypeCode !== data.productTypeCode) ||
++          (it.selectedType === data.selectedType &&
++            it.productTypeCode !== data.productTypeCode) ||
+           (it.selectedType === 2 && data.productTypeCode !== it.productTypeCode)
+       );
+     } else if (data.selectedType === 2) {
+-      selectedItemFilter = selectedItems.filter((it: any) => it.selectedType === 1 || it.barcode !== data.barcode);
++      selectedItemFilter = selectedItems.filter(
++        (it: any) => it.selectedType === 1 || it.barcode !== data.barcode
++      );
+     }
+     setSelectedItems(selectedItemFilter);
+   };
+@@ -422,7 +476,9 @@
+     let selectedItemEnds = _.cloneDeep(selectedItems);
+     if (selectedItemEnds && selectedItemEnds.length > 0) {
+       let listTypeCodeProducts = new Set(
+-        selectedItemEnds.map((item: any) => item.productTypeCode).filter((el: any) => el != undefined)
++        selectedItemEnds
++          .map((item: any) => item.productTypeCode)
++          .filter((el: any) => el != undefined)
+       );
+       let listCategoryCode = selectedItemEnds
+         .filter((el: any) => el.selectedType === 1)
+@@ -431,7 +487,9 @@
+       let listTypes = Array.from(listTypeCodeProducts);
+       for (let i of listTypes) {
+         if (!listCategoryCode.includes(i)) {
+-          const item = selectedItemEnds.find((el: any) => i === el.productTypeCode);
++          const item = selectedItemEnds.find(
++            (el: any) => i === el.productTypeCode
++          );
+           selectedItemEnds.push({
+             productTypeCode: item.productTypeCode,
+             productTypeName: item.productTypeName,
+@@ -440,18 +498,26 @@
+         }
+       }
+     }
+-    if (payloadAddTypeProduct && payloadAddTypeProduct.length > 0 && !props.showSearch) {
++    if (
++      payloadAddTypeProduct &&
++      payloadAddTypeProduct.length > 0 &&
++      !props.showSearch
++    ) {
+       for (const item of payloadAddTypeProduct) {
+         if (item.selectedType === 1) {
+           let selectedItemFilter = selectedItems.filter(
+-            (it) => it.selectedType === item.selectedType && it.productTypeCode === item.productTypeCode
++            (it) =>
++              it.selectedType === item.selectedType &&
++              it.productTypeCode === item.productTypeCode
+           );
+           if (selectedItemFilter && selectedItemFilter.length === 0) {
+             selectedItemEnds.push(item);
+           }
+         } else if (item.selectedType === 2) {
+           let selectedItemFilter = selectedItems.filter(
+-            (it) => it.selectedType === item.selectedType && it.barcode === item.barcode
++            (it) =>
++              it.selectedType === item.selectedType &&
++              it.barcode === item.barcode
+           );
+           if (selectedItemFilter && selectedItemFilter.length === 0) {
+             selectedItemEnds.push(item);
+@@ -480,7 +546,11 @@
+       const items: any = [];
+       let productTypeName: any = [];
+       payloadAddTypeProduct.map((item: any, index: number) => {
+-        let pTypeName = item.productTypeName ? item.productTypeName : item.productTypeName ? item.productTypeName : '';
++        let pTypeName = item.productTypeName
++          ? item.productTypeName
++          : item.productTypeName
++          ? item.productTypeName
++          : "";
+ 
+         if (item.selectedType === 2 && !item.productByType) {
+           productTypeName.push(pTypeName);
+@@ -488,7 +558,9 @@
+         } else if (item.selectedType === 2 && item.productByType) {
+           items.push(item);
+         } else if (item.selectedType === 1) {
+-          const filterTypeName = productTypeName.filter((r: any) => r === pTypeName);
++          const filterTypeName = productTypeName.filter(
++            (r: any) => r === pTypeName
++          );
+           if (filterTypeName.length === 0) items.push(item);
+         }
+       });
+@@ -506,80 +578,119 @@
+       setSearchItem(null);
+       clearInput();
+ 
+-      if (selectedItems.length === 0) dispatch(updateAddTypeAndProductState([]));
++      if (selectedItems.length === 0)
++        dispatch(updateAddTypeAndProductState([]));
+       if (payloadAddTypeProduct.length === 0) setSelectedItems([]);
+     }
+     props.onClose();
+   };
+ 
+   return (
+-    <Dialog open={props.open} PaperProps={{ sx: { width: '1132px', maxWidth: '1132px' } }}>
++    <Dialog
++      open={props.open}
++      PaperProps={{ sx: { width: "1132px", maxWidth: "1132px" } }}
++    >
+       <Box sx={{ flex: 1, ml: 2 }}>
+         {/* {props.onClose ? ( */}
+         <IconButton
+-          aria-label='close'
++          aria-label="close"
+           // onClick={props.onClose}
+           onClick={handleOnClose}
+           sx={{
+-            position: 'absolute',
++            position: "absolute",
+             right: 8,
+             top: 8,
+             color: (theme: any) => theme.palette.grey[400],
+-          }}>
+-          <CancelOutlinedIcon fontSize='large' stroke={'white'} stroke-width={1} />
++          }}
++        >
++          <CancelOutlinedIcon
++            fontSize="large"
++            stroke={"white"}
++            stroke-width={1}
++          />
+         </IconButton>
+         {/* ) : null} */}
+       </Box>
+-      <DialogContent sx={{ padding: '52px 28px 42px 100px' }}>
++      <DialogContent sx={{ padding: "52px 28px 42px 100px" }}>
+         <Grid container spacing={2}>
+           <Grid item xs={5} pr={5.5}>
+             <Box>
+-              <Typography gutterBottom variant='subtitle1' component='div' mb={1} mt={-1.9}>
++              <Typography
++                gutterBottom
++                variant="subtitle1"
++                component="div"
++                mb={1}
++                mt={-1.9}
++              >
+                 {props.title && props.title}
+-                {!props.title && 'เพิ่มรายการสินค้า (งด) ขาย'}
++                {!props.title && "เพิ่มรายการสินค้า (งด) ขาย"}
+               </Typography>
+             </Box>
+             <Box>
+-              <Typography gutterBottom variant='subtitle1' component='div' mb={1}>
++              <Typography
++                gutterBottom
++                variant="subtitle1"
++                component="div"
++                mb={1}
++              >
+                 ประเภทสินค้า
+               </Typography>
+               <Autocomplete
+-                data-testid='autocomplete-product-type'
++                data-testid="autocomplete-product-type"
+                 options={productTypeOptions}
+-                id='combo-box-type'
+-                popupIcon={<SearchIcon color='primary' />}
+-                size='small'
++                id="combo-box-type"
++                popupIcon={<SearchIcon color="primary" />}
++                size="small"
+                 filterOptions={filterProductTypeOptions}
+                 renderOption={renderProductTypeListItem}
+                 renderInput={autocompleteProductTypeRenderInput}
+                 onInputChange={onInputChangeProductType}
+                 onChange={handleChangeProductType}
+-                getOptionLabel={(option) => (option.productTypeName ? option.productTypeName : '')}
+-                isOptionEqualToValue={(option, value) => option.productTypeName === value.productTypeName}
++                getOptionLabel={(option) =>
++                  option.productTypeName ? option.productTypeName : ""
++                }
++                isOptionEqualToValue={(option, value) =>
++                  option.productTypeName === value.productTypeName
++                }
+                 noOptionsText={null}
+                 className={classes.MautocompleteAddProduct}
+                 value={values.productType}
+               />
+             </Box>
+             <Box>
+-              <Box sx={{ display: 'flex', alignItems: 'center' }} mt={1}>
+-                <Typography gutterBottom variant='subtitle1' component='div' mr={3}>
++              <Box sx={{ display: "flex", alignItems: "center" }} mt={1}>
++                <Typography
++                  gutterBottom
++                  variant="subtitle1"
++                  component="div"
++                  mr={3}
++                >
+                   ค้นหาสินค้า
+                 </Typography>
+                 <FormGroup>
+                   <FormControlLabel
+                     control={
+-                      <Checkbox checked={values.selectAllProduct} disabled={objectNullOrEmpty(values.productType)} />
++                      <Checkbox
++                        checked={values.selectAllProduct}
++                        disabled={objectNullOrEmpty(values.productType)}
++                      />
+                     }
+                     onClick={onChangeSelectAllProduct}
+-                    label={'เลือกสินค้าทั้งหมด'}
++                    label={"เลือกสินค้าทั้งหมด"}
+                   />
+                 </FormGroup>
+ 
+                 {flagErrType && (
+                   <Box
+-                    sx={{ display: 'flex', alignItems: 'center', color: '#FF0000', fontSize: 14, marginTop: '4px' }}
+-                    ml={1}>
++                    sx={{
++                      display: "flex",
++                      alignItems: "center",
++                      color: "#FF0000",
++                      fontSize: 14,
++                      marginTop: "4px",
++                    }}
++                    ml={1}
++                  >
+                     ไม่พบสินค้า
+                   </Box>
+                 )}
+@@ -587,16 +698,20 @@
+ 
+               <Autocomplete
+                 options={productOptions}
+-                id='combo-box-product'
+-                popupIcon={<SearchIcon color='primary' />}
+-                size='small'
++                id="combo-box-product"
++                popupIcon={<SearchIcon color="primary" />}
++                size="small"
+                 filterOptions={filterProductOptions}
+                 renderOption={renderProductListItem}
+                 renderInput={autocompleteProductRenderInput}
+                 onInputChange={onInputChangeProduct}
+                 onChange={handleChangeProduct}
+-                getOptionLabel={(option) => (option.barcodeName ? option.barcodeName : '')}
+-                isOptionEqualToValue={(option, value) => option.barcodeName === value.barcodeName}
++                getOptionLabel={(option) =>
++                  option.barcodeName ? option.barcodeName : ""
++                }
++                isOptionEqualToValue={(option, value) =>
++                  option.barcodeName === value.barcodeName
++                }
+                 noOptionsText={null}
+                 className={classes.MautocompleteAddProduct}
+                 value={values.product}
+@@ -606,25 +721,40 @@
+           <Grid item xs={7}>
+             <Box
+               className={classes.MWrapperListBranch}
+-              sx={{ width: '543px', minWidth: '543px', minHeight: '280px', height: '280px' }}>
+-              <Box sx={{ display: 'flex', flexWrap: 'wrap', maxHeight: '260px', overflow: 'auto' }}>
++              sx={{
++                width: "543px",
++                minWidth: "543px",
++                minHeight: "280px",
++                height: "280px",
++              }}
++            >
++              <Box
++                sx={{
++                  display: "flex",
++                  flexWrap: "wrap",
++                  maxHeight: "260px",
++                  overflow: "auto",
++                }}
++              >
+                 {renderSelectedItems()}
+               </Box>
+             </Box>
+           </Grid>
+         </Grid>
+       </DialogContent>
+-      <Grid item xs={12} sx={{ textAlign: 'right' }} mr={3} mb={4}>
++      <Grid item xs={12} sx={{ textAlign: "right" }} mr={3} mb={4}>
+         <Button
+-          variant='contained'
++          variant="contained"
+           // color='primary'
+           // startIcon={<AddCircleOutlineOutlinedIcon />}
+-          color={`${!props.textBtn ? 'primary' : 'info'}`}
++          color={`${!props.textBtn ? "primary" : "info"}`}
+           onClick={handleAddProduct}
++          data-testid="btn-add-product"
+           disabled={!(selectedItems && selectedItems.length > 0)}
+-          className={classes.MbtnSearch}>
++          className={classes.MbtnSearch}
++        >
+           {props.textBtn && props.textBtn}
+-          {!props.textBtn && 'เพิ่มสินค้า'}
++          {!props.textBtn && "เพิ่มสินค้า"}
+         </Button>
+       </Grid>
+       <LoadingModal open={openLoadingModal} />

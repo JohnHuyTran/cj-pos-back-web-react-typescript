@@ -1,0 +1,22 @@
+{
+  "lstStatus": [
+    {
+      "value": "1",
+      "label": "Draft"
+    },
+    {
+      "value": "2",
+      "label": "Start"
+    },
+    {
+      "value": "3",
+      "label": "End"
+    },
+    {
+      "value": "4",
+      "label": "Cancel"
+    }
+  ],
+  "noData": "No data",
+  "all": "ALL"
+}

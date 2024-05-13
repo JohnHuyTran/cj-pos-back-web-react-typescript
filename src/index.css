@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit&display=swap");
+:root {
+  --primary: #36c690;
+}
+body {
+  margin: 0;
+
+  font-family: "Kanit", sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: "Kanit", sans-serif;
+}
+.MuiDrawer-docked .MuiList-root .MuiList-root .MuiTypography-body1 {
+  font-size: 14px;
+}
+.MuiDrawer-docked .MuiList-root .Mui-selected:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 8px;
+  right: 0;
+  bottom: 8px;
+  width: 4px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+.MuiDataGrid-root .MuiDataGrid-window::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.MuiDataGrid-root .MuiDataGrid-window::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+}
+
+/*fix search*/
+[class*="MtextField"] .MuiOutlinedInput-input,
+.MuiTextField-root[class*="pos"] .MuiOutlinedInput-input {
+  min-height: 30px;
+}
+[class*="Mselect"] .MuiOutlinedInput-input.MuiInputBase-input,
+[class*="pos"] .MuiSelect-root .MuiOutlinedInput-input.MuiInputBase-input {
+  height: 30px;
+  line-height: 30px;
+  padding-left: 5px;
+}
+/* [class*='Mdatepicker'] .MuiInputBase-root.MuiOutlinedInput-root,
+[class*='pos'] .MuiInputBase-root.MuiOutlinedInput-root {
+  height: 38px;
+} */
+
+[class*="Mdatepicker"] .MuiInputBase-root.MuiOutlinedInput-root,
+[class*="MuiGrid-root"]
+  > div:not(.MuiGrid-root)
+  > [class*="pos"]
+  .MuiInputBase-root.MuiOutlinedInput-root.MuiOutlinedInput-adornedStart,
+[class*="pos"] > div > [class*="pos"] .MuiInputBase-root.MuiOutlinedInput-root {
+  height: 38px;
+}
+
+/* @media print {
+  html,
+  body {
+    border: 1px solid white;
+    height: 99%;
+    page-break-after: avoid;
+    page-break-before: avoid;
+  }
+} */

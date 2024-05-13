@@ -1,0 +1,11 @@
+{
+  "status": {
+    "DRAFT": "บันทึก",
+    "APPROVED": "อนุมัติ"
+  },
+  "documentTitle": "เงินฝากขาด-เกิน",
+  "documentSearchBranch": "สาขา",
+  "documentSearchStartDate": "ตั้งแต่วันที่ยอดขาย",
+  "documentSearchEndDate": "ถึงวันที่ยอดขาย",
+  "documentSearchStatus": "สถานะ"
+}

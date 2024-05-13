@@ -1,0 +1,39 @@
+{
+  "button": {
+    "clear": "เคลียร์",
+    "search": "ค้นหา",
+    "add": "เพิ่ม"
+  },
+  "menu": {
+    "productDiscount": "ส่วนลดสินค้า"
+  },
+  "searchbranch": {
+    "allBranches": "Select All Branches",
+    "someBranches": "Select some branches",
+    "province": "Province",
+    "branch": "Branch",
+    "selectAllBranchProvince": "Select All Branch Province",
+    "addBranches": "Add Branches"
+  },
+  "status": {
+    "CREATED": "บันทึก",
+    "READY_TO_TRANSFER": "ส่งงานให้ DC",
+    "WAIT_FOR_PICKUP": "รอขนส่งมารับสินค้า",
+    "TRANSFERING": "อยู่ระหว่างขนส่ง",
+    "CLOSED": "ปิดงาน",
+    "COMPLETED": "ปิดงาน",
+    "CANCELED": "ยกเลิก",
+    "DRAFT": "บันทึก",
+    "WAIT_FOR_APPROVAL_1": "รออนุมัติ1",
+    "WAIT_FOR_APPROVAL_2": "รออุนมัติ2",
+    "APPROVED": "อนุมัติ",
+    "AWAITING_FOR_REQUESTER": "ส่งกลับแก้ไข",
+    "REJECTED": "ยกเลิก"
+  },
+  "stock": {
+    "location": {
+      "001": "หน้าร้าน",
+      "002": "หลังร้าน"
+    }
+  }
+}

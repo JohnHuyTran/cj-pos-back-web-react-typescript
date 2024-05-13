@@ -1,0 +1,34 @@
+{
+  "status": {
+    "DRAFT": "บันทึก",
+    "SEND_BACK_EDIT": "ส่งกลับแก้ไข",
+    "WAITTING_EDIT_ATTACH_FILE": "รอแก้ไขเอกสาร",
+    "WAITTING_APPROVAL1": "รออนุมัติ1",
+    "WAITTING_APPROVAL2": "รออนุมัติ2",
+    "WAITTING_ACCOUNTING": "รอบัญชีตรวจสอบ",
+    "WAITTING_APPROVAL3": "รออนุมัติ3",
+    "APPROVED": "อนุมัติ",
+    "CORRECT": "ถูกต้อง",
+    "PENDING_REVIEW": "รอตรวจสอบ",
+    "CLOSED": "ปิดงาน",
+    "SAP_ERROR": "ส่งSAPไม่สำเร็จ",
+    "NONE": "ไม่มี",
+    "REVIEWED": "ตรวจสอบแล้ว"
+  },
+  "type": {
+    "COFFEE": "ค่าใช้จ่ายร้านกาแฟ",
+    "STOREFRONT": "ค่าใช้จ่ายหน้าร้าน"
+  },
+  "title": {
+    "documentSearch": "ค่าใช้จ่าย",
+    "closeSaleShift": "ปิดรหัสการขาย",
+    "openEnd": "ปิดรอบการขาย"
+  },
+  "cashPayment": {
+    "totalPayAmount": "รวมเงินสดจ่าย",
+    "iceAmount": "ค่าน้ำแข็ง",
+    "yakultAmount": "ค่ายาคูลท์",
+    "coffeeExpenseAmount": "เงินอนุมัติสำรองร้านกาแฟ",
+    "frontExpenseAmount": "เงินอนุมัติสำรองหน้าร้าน"
+  }
+}

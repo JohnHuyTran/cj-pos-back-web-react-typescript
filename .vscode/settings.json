@@ -1,0 +1,9 @@
+{
+  "window.zoomLevel": -2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": false,
+  "i18n-ally.localesPaths": [
+    "public/locales",
+    "src/locales"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "button": {
+    "clear": "Clear",
+    "search": "Search"
+  },
+  "menu": {
+    "productDiscount": "Product discount"
+  },
+  "stock": {
+    "location": {
+      "001": "หน้าร้าน",
+      "002": "หลังร้าน"
+    }
+  }
+}

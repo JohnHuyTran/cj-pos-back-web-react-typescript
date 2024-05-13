@@ -1,0 +1,12 @@
+{
+  "status": {
+    "PRINTED": "พิมพ์ใบกำกับ",
+    "CANCELLED": "ใบเสร็จยกเลิก"
+  },
+  "type": {
+    "ORIGINAL": "ต้นฉบับ",
+    "SUBSTITUTE": "ใบแทน",
+    "ORIGINAL_EDITED": "ต้นฉบับ-แก้ไขข้อมูลลูกค้า",
+    "SUBSTITUTE_EDITED": "ใบแทน-แก้ไขข้อมูลลูกค้า"
+  }
+}
